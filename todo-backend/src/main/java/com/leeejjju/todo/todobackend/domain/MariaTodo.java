@@ -1,4 +1,4 @@
-package com.leeejjju.todo.todobackend;
+package com.leeejjju.todo.todobackend.domain;
 import jakarta.persistence.*;
 import jakarta.persistence.GenerationType;
 
@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 // 이 @Entity라는 어노테이션을 붙여놓으면 Spring JPA가 이 클래스를 DB 테이블로 취급 (와...)
 @Entity
 @Table(name="todos")
-public class Todo {
+public class MariaTodo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,15 +16,15 @@ public class Todo {
     private boolean completed;
 
     //생성자
-    public Todo() {
+    public MariaTodo() {
         this.completed = false;
     }
-    public Todo(Long id, String title) {
+    public MariaTodo(Long id, String title) {
         this.id = id;
         this.title = title;
         this.completed = false;
     }
-    public Todo(Long id, String title, boolean completed) {
+    public MariaTodo(Long id, String title, boolean completed) {
         this.id = id;
         this.title = title;
         this.completed = completed;

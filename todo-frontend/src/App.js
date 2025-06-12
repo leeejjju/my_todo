@@ -1,27 +1,3 @@
-// import logo from './logo.svg';
-// import './App.css';
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-// export default App;
-
 // useEffect와 useState는 리액트에서 제공하는 특별한 Hook. 
 // useEffect는 컴포넌트의 특정 시점에 동작을 추가하는 도구. 보통 랜더링시 한번 실행되게 하는 데 사용됨 (Main함수같은건가??)
 // userState: 변수처럼 값을 저장하고 바꿀 수 있게 해주는 친구 
@@ -50,7 +26,6 @@ function App() {
     () => { fetchTodos();}, // fetchTodos라는 함수를 실행 
     [] // 의존성 배열: 비어있으면 한 번만 실행 
   ); 
-
 
   //newTodoTitle이라는 변수를 setNewTodoTitle이라는 setter와 선언, 초기화인가?
   //왜 이딴식으로 쓰냐면 값이 바뀌면 UI를 다시 그려주기 위해서... 값이 바뀌는 상황을 단순히 변수에 값 대입하는게 아니라 setter를 거치게 해서 UI 새로고침의 트리거로도 사용하는 느낌스?? 
@@ -94,8 +69,6 @@ function App() {
     });
     fetchTodos(); // 삭제 후 다시 목록 갱신
   };
-
-
 
 
   //이게 화면에 띄워질 부분인 듯?? HTML문법 아녀 이거 -> HTML처럼 생긴 JSX문법. 
