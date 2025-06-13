@@ -1,7 +1,10 @@
 // useEffect와 useState는 리액트에서 제공하는 특별한 Hook. 
 // useEffect는 컴포넌트의 특정 시점에 동작을 추가하는 도구. 보통 랜더링시 한번 실행되게 하는 데 사용됨 (Main함수같은건가??)
 // userState: 변수처럼 값을 저장하고 바꿀 수 있게 해주는 친구 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+
+import TodoItem from './components/TodoItem.js';
+import TodoInput from './components/TodoInput.js';
 
 // 자바스크립트 함수. 리액트에서는 컴포넌트로 사용됨. 컴포넌트: 어떤 UI를 보여줄지 정의한 함수 
 function App() {
@@ -10,21 +13,23 @@ function App() {
     // setTodos는 todos를 바꾸는 함수 
     // 아래 문법은 todos라는 변수와 setTodos라는 변수를 변경하는 함수(setter)를 함께 선언하는 것 
     const [todos, setTodos] = useState([]);
+    const API_BASE = "http://localhost:8080/api";
+    const TODO_API_URL = API_BASE+"/todos";
 
     // 서버에서 데이터를 불러와서 todos 변수에 저장하는 함수 
     // async는 비동기적으로 작업을 수행함: 요청 후 기다리지 않고 다음 코드로 넘어갈 수 있음 
-    const fetchTodos = async () => {
+    const fetchTodos = useCallback(async () => {
       // await: 완료될 때 까지 기다림 
-      const res = await fetch("http://localhost:8080/api/todos"); //fetch: 서버에서 데이터를 받아옴 
+      const res = await fetch(TODO_API_URL); //fetch: 서버에서 데이터를 받아옴 
       const data = await res.json(); //서버에서 받아온 데이터(res)를 json 형식으로 변환 
       setTodos(data); // 위에서 todos랑 setTodos 묶은 것 처럼... setTodos 통해 todos를 조작 -> 받아온 데이터 넣기
-    };
+    }, [TODO_API_URL]);
     //화살표 함수 + 비동기 문법이 결합된 형태의 함수 선언 문법임. 
 
   //userEffect: React의 라이프사이클 훅. 시작시 한 번 호출되는 친구. 
   useEffect(
-    () => { fetchTodos();}, // fetchTodos라는 함수를 실행 
-    [] // 의존성 배열: 비어있으면 한 번만 실행 
+    () => { fetchTodos();} // fetchTodos라는 함수를 실행 
+    , [fetchTodos] // 의존성 배열: 비어있으면 한 번만 실행 
   ); 
 
   //newTodoTitle이라는 변수를 setNewTodoTitle이라는 setter와 선언, 초기화인가?
@@ -38,7 +43,7 @@ function App() {
 
     // 서버에 POST API를 보낸건가봐 
     await fetch(
-      "http://localhost:8080/api/todos", 
+      TODO_API_URL, 
       {
         method: "POST",
         headers: { "Content-Type": "application/json",},
@@ -54,7 +59,7 @@ function App() {
   const handleToggle = async (id) => {
     try {
       // 변수 ${id}가 포함되어 있을 때는 큰따옴표(") 말고 백틱?(`)을 써야 함!! 
-      await fetch(`http://localhost:8080/api/todos/${id}/toggle`, {
+      await fetch(`${TODO_API_URL}/${id}/toggle`, {
         method: "PATCH",
       });
       fetchTodos(); // 다시 목록 불러오기
@@ -64,7 +69,7 @@ function App() {
   };
 
   const deleteTodo = async (id) => {
-    await fetch(`http://localhost:8080/api/todos/${id}`, {
+    await fetch(`${TODO_API_URL}/${id}`, {
       method: "DELETE",
     });
     fetchTodos(); // 삭제 후 다시 목록 갱신
@@ -74,33 +79,24 @@ function App() {
   //이게 화면에 띄워질 부분인 듯?? HTML문법 아녀 이거 -> HTML처럼 생긴 JSX문법. 
   return (
     <div style={{ padding: "2rem" }}>
+
       <h1>MY TODO LIST</h1>
 
-      <ul>
-        {todos.map(
-          (todo) => (
-            <li key={todo.id}>
-              {todo.completed ? "✅" : "❌"}  {todo.title} 
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={()=>handleToggle(todo.id)}
-              />
-              <button onClick={()=> deleteTodo(todo.id)}>🗑️</button>
-            </li>
-          )
-        )}
-      </ul>
-
       <div>
-        <input
-          type="text"
-          value={newTodoTitle}
-          onChange={(e) => setNewTodoTitle(e.target.value)}
-          placeholder="Enter new TODO..."
-        />
-        <button onClick={handleAddTodo}>ADD</button>
+        <ul>
+          {todos.map((todo) => (
+              <li key={todo.id}>
+                <TodoItem todo={todo} onToggle={handleToggle} onDelete={deleteTodo}></TodoItem>
+              </li>
+            )
+          )}
+        </ul>
+        <TodoInput value={newTodoTitle} onChange={setNewTodoTitle} onAdd={handleAddTodo}></TodoInput>
       </div>
+
+      <div  style={{ padding: "1rem" }}></div>
+      <img src="/images/general.jpg" alt="장군이" style={{ width: "200px" }} />
+        
 
     </div>
   );
