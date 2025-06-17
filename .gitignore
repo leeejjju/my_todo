@@ -4,6 +4,7 @@
 .DS_Store
 Thumbs.db
 *.log
+*.swp
 
 # Ignore IDE settings
 .idea/
