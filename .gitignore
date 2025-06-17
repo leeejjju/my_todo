@@ -10,38 +10,3 @@ Thumbs.db
 .idea/
 *.iml
 .vscode/
-
-# ========================================================
-# Backend: Spring Boot + Gradle (todo-backend)
-# ========================================================
-todo-backend/build/
-todo-backend/out/
-todo-backend/.gradle/
-todo-backend/target/
-todo-backend/*.iml
-todo-backend/.idea/
-
-# Ignore config files (e.g. DB credentials)
-todo-backend/src/main/resources/*.properties
-todo-backend/src/main/resources/*.yml
-todo-backend/src/main/resources/*.yaml
-
-# Ignore MongoDB / MariaDB dumps if any
-todo-backend/dump/
-todo-backend/*.sql
-todo-backend/*.bson
-
-# ========================================================
-# Frontend: React (todo-frontend)
-# ========================================================
-todo-frontend/node_modules/
-todo-frontend/build/
-todo-frontend/.env
-todo-frontend/.env.local
-todo-frontend/.env.development
-todo-frontend/.env.production
-todo-frontend/.env.test
-todo-frontend/npm-debug.log*
-todo-frontend/yarn-debug.log*
-todo-front
-

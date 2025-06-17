@@ -1,7 +1,4 @@
 package com.leeejjju.todo.todobackend.dto;
-
-
-
 import java.time.LocalDateTime;
 
 public class TodoEvent {
