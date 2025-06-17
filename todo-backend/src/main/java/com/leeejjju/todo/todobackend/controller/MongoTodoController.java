@@ -11,11 +11,10 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000") // 프론트랑 연결용이래...
 @RestController
 @RequestMapping("/api/todos/mongo")
-public class MongoTodoController_tmp {
+public class MongoTodoController {
 
     private final MongoTodoRepository mongoTodoRepository;
-
-    public MongoTodoController_tmp(MongoTodoRepository mongoTodoRepository) {
+    public MongoTodoController(MongoTodoRepository mongoTodoRepository) {
         this.mongoTodoRepository = mongoTodoRepository;
     }
 

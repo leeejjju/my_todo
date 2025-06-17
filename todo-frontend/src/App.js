@@ -6,6 +6,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import TodoItem from './components/TodoItem.js';
 import TodoInput from './components/TodoInput.js';
 
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import List from '@mui/material/List';
+import Paper from '@mui/material/Paper';
+
 // 자바스크립트 함수. 리액트에서는 컴포넌트로 사용됨. 컴포넌트: 어떤 UI를 보여줄지 정의한 함수 
 function App() {
 
@@ -41,18 +45,20 @@ function App() {
     //없으면(null) 스킵? 
     if (!newTodoTitle.trim()) return;
 
+
     // 서버에 POST API를 보낸건가봐 
-    await fetch(
+    const res = await fetch(
       TODO_API_URL, 
       {
         method: "POST",
         headers: { "Content-Type": "application/json",},
         body: JSON.stringify({ title: newTodoTitle }),
-      }
-    );
+    });
 
+    const newTodo = await res.json();
+    setTodos((prevTodo)=>[...prevTodo, newTodo]); // 임시로 새 데이터 추가해주기...! (뿌슝빠슝뿌슝)
     setNewTodoTitle(""); // 입력칸을 빈 문자열로 초기화 
-    fetchTodos(); // 새로고침 
+    // fetchTodos(); // 새로고침 -> 임시로 추가한 값이 나중에 동기화 될 것이라는 "신뢰"를 ㄱ ㅏ지고 생략... 
 
   };
 
@@ -72,32 +78,55 @@ function App() {
     await fetch(`${TODO_API_URL}/${id}`, {
       method: "DELETE",
     });
-    fetchTodos(); // 삭제 후 다시 목록 갱신
+    
+    //Optimistic UI!! 일단 자체적으로 삭제시켜서 보여주기! 
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    // fetchTodos(); // 삭제 후 다시 목록 갱신 -> 되겠지 머~ 
   };
 
 
   //이게 화면에 띄워질 부분인 듯?? HTML문법 아녀 이거 -> HTML처럼 생긴 JSX문법. 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div 
+    style={{ 
+      padding: "2rem",
+      width: "50%",
+      minWidth: '300px',
+      maxWidth: '500px',
+      alignItems: "center",
+      margin: '0 auto'
+    }}>
 
-      <h1>MY TODO LIST</h1>
+      <h1>
+        <AssignmentTurnedInIcon fontSize="big" color="action"/>
+        MY TODO LIST
+        <img 
+          src="/images/general.PNG" 
+          alt="장군이" 
+          style={{ 
+            width: "64px",
+            height: "60px",
+            objectFit: 'contain',
+            position: 'relative',
+            top: '16px',
+            left: '8px'
+          }} />
+       
+      </h1>
 
-      <div>
-        <ul>
+      <Paper elevation={3} style={{ padding: '16px', marginTop: '20px' }}>
+        <List>
           {todos.map((todo) => (
               <li key={todo.id}>
                 <TodoItem todo={todo} onToggle={handleToggle} onDelete={deleteTodo}></TodoItem>
               </li>
             )
           )}
-        </ul>
+        </List>
         <TodoInput value={newTodoTitle} onChange={setNewTodoTitle} onAdd={handleAddTodo}></TodoInput>
-      </div>
+      </Paper>
 
       <div  style={{ padding: "1rem" }}></div>
-      <img src="/images/general.jpg" alt="장군이" style={{ width: "200px" }} />
-        
-
     </div>
   );
   // <ui> 밑에 무슨 컴언어마냥... todos.map()이거가 원소 하나하나의 할 일을 화면에 <li>로 보여준대..
