@@ -1,9 +1,9 @@
 spring.application.name=todo-backend
 
 # MariaDB
-spring.datasource.url=jdbc:mariadb://localhost:3306/todo_maria
-spring.datasource.username=YOUR_DB_USER
-spring.datasource.password=YOUR_DB_PASSWORD
+spring.datasource.url=jdbc:mariadb://mariadb:3306/todo_maria
+spring.datasource.username=YOUR_USER_NAME
+spring.datasource.password=YOUR_PASSWORD
 spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
 
 # MariaDB
@@ -12,12 +12,12 @@ spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MariaDBDialect
 
 # MongoDB
-spring.data.mongodb.uri=mongodb://localhost:27017/todo_mongo
+spring.data.mongodb.uri=mongodb://mongodb:27017/todo_mongo
 logging.level.org.springframework.data.mongodb.core.MongoTemplate=DEBUG
 
 
 # Kafka
-spring.kafka.bootstrap-servers=localhost:9092
+spring.kafka.bootstrap-servers=kafka:9092
 spring.kafka.template.default-topic=todo-events
 
 # ===== Producer=====

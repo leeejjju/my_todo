@@ -15,7 +15,7 @@ function App() {
     // setTodos는 todos를 바꾸는 함수 
     // 아래 문법은 todos라는 변수와 setTodos라는 변수를 변경하는 함수(setter)를 함께 선언하는 것 
     const [todos, setTodos] = useState([]);
-    const API_BASE = "http://localhost:8080/api";
+    const API_BASE = `${process.env.REACT_APP_API_BASE_URL}/api`;
     const TODO_API_URL = API_BASE+"/todos";
 
     // 서버에서 데이터를 불러와서 todos 변수에 저장하는 함수 
