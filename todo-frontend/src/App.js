@@ -2,10 +2,8 @@
 // useEffect는 컴포넌트의 특정 시점에 동작을 추가하는 도구. 보통 랜더링시 한번 실행되게 하는 데 사용됨 (Main함수같은건가??)
 // userState: 변수처럼 값을 저장하고 바꿀 수 있게 해주는 친구 
 import React, { useCallback, useEffect, useState } from "react";
-
 import TodoItem from './components/TodoItem.js';
 import TodoInput from './components/TodoInput.js';
-
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import List from '@mui/material/List';
 import Paper from '@mui/material/Paper';
