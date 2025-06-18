@@ -25,8 +25,10 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     depends_on:
       - zookeeper
+    volumes:
+      - kafka_data:/var/lib/kafka/data
     networks:
-      - todo-net 
+      - todo-net
 
   mariadb:
     image: mariadb
@@ -63,16 +65,50 @@ services:
     networks:
       - todo-net
 
-  todo-backend:
+#  todo-backend:
+#    build:
+#      context: ./todo-backend
+#      dockerfile: Dockerfile
+#    container_name: backend
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - mariadb
+#      - mongodb
+#      - kafka
+#    networks:
+#      - todo-net
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb:3306/todo_maria
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: w123
+#      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/todo_mongo
+
+  todo-backend-read:
     build:
-      context: ./todo-backend
+      context: ./todo-backend-read
       dockerfile: Dockerfile
-    container_name: backend
+    container_name: backend-read
     ports:
-      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - mongodb
+      - kafka
+    networks:
+      - todo-net
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/todo_mongo
+
+
+  todo-backend-write:
+    build:
+      context: ./todo-backend-write
+      dockerfile: Dockerfile
+    container_name: backend-write
+    ports:
+      - "8082:8082"
     depends_on:
       - mariadb
-      - mongodb
       - kafka
     networks:
       - todo-net
@@ -80,11 +116,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb:3306/todo_maria
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: w123
-      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/todo_mongo
 
 volumes:
   mariadb_data:
   mongodb_data:
+  kafka_data:
 
 networks:
   todo-net:

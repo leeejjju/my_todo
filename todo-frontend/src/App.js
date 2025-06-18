@@ -15,17 +15,17 @@ function App() {
     // setTodos는 todos를 바꾸는 함수 
     // 아래 문법은 todos라는 변수와 setTodos라는 변수를 변경하는 함수(setter)를 함께 선언하는 것 
     const [todos, setTodos] = useState([]);
-    const API_BASE = `${process.env.REACT_APP_API_BASE_URL}/api`;
-    const TODO_API_URL = API_BASE+"/todos";
+    const TODO_API_URL_READ = `${process.env.REACT_APP_API_BASE_URL_READ}/api/todos`;
+    const TODO_API_URL_WRITE = `${process.env.REACT_APP_API_BASE_URL_WRITE}/api/todos`;
 
     // 서버에서 데이터를 불러와서 todos 변수에 저장하는 함수 
     // async는 비동기적으로 작업을 수행함: 요청 후 기다리지 않고 다음 코드로 넘어갈 수 있음 
     const fetchTodos = useCallback(async () => {
       // await: 완료될 때 까지 기다림 
-      const res = await fetch(TODO_API_URL); //fetch: 서버에서 데이터를 받아옴 
+      const res = await fetch(TODO_API_URL_READ); //fetch: 서버에서 데이터를 받아옴 
       const data = await res.json(); //서버에서 받아온 데이터(res)를 json 형식으로 변환 
       setTodos(data); // 위에서 todos랑 setTodos 묶은 것 처럼... setTodos 통해 todos를 조작 -> 받아온 데이터 넣기
-    }, [TODO_API_URL]);
+    }, [TODO_API_URL_READ]);
     //화살표 함수 + 비동기 문법이 결합된 형태의 함수 선언 문법임. 
 
   //userEffect: React의 라이프사이클 훅. 시작시 한 번 호출되는 친구. 
@@ -46,7 +46,7 @@ function App() {
 
     // 서버에 POST API를 보낸건가봐 
     const res = await fetch(
-      TODO_API_URL, 
+      TODO_API_URL_WRITE, 
       {
         method: "POST",
         headers: { "Content-Type": "application/json",},
@@ -63,7 +63,7 @@ function App() {
   const handleToggle = async (id) => {
     try {
       // 변수 ${id}가 포함되어 있을 때는 큰따옴표(") 말고 백틱?(`)을 써야 함!! 
-      await fetch(`${TODO_API_URL}/${id}/toggle`, {
+      await fetch(`${TODO_API_URL_WRITE}/${id}/toggle`, {
         method: "PATCH",
       });
       fetchTodos(); // 다시 목록 불러오기
@@ -73,7 +73,7 @@ function App() {
   };
 
   const deleteTodo = async (id) => {
-    await fetch(`${TODO_API_URL}/${id}`, {
+    await fetch(`${TODO_API_URL_WRITE}/${id}`, {
       method: "DELETE",
     });
     

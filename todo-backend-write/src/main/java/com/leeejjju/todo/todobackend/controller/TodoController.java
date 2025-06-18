@@ -1,7 +1,5 @@
 package com.leeejjju.todo.todobackend.controller;
 import com.leeejjju.todo.todobackend.domain.MariaTodo;
-import com.leeejjju.todo.todobackend.domain.MongoTodo;
-import com.leeejjju.todo.todobackend.repository.MongoTodoRepository;
 
 import com.leeejjju.todo.todobackend.dto.TodoEvent;
 import com.leeejjju.todo.todobackend.repository.MariaTodoRepository;
@@ -18,19 +16,11 @@ import java.util.Map;
 public class TodoController {
 
     private final MariaTodoRepository mariaTodoRepository; // 이게 찐 DB!!
-    private final MongoTodoRepository mongoTodoRepository;
     private final TodoKafkaProducer todoKafkaProducer;
 
-    public TodoController(MariaTodoRepository mariaTodoRepository, MongoTodoRepository mongoTodoRepository, TodoKafkaProducer todoKafkaProducer) {
+    public TodoController(MariaTodoRepository mariaTodoRepository, TodoKafkaProducer todoKafkaProducer) {
         this.mariaTodoRepository = mariaTodoRepository;
-        this.mongoTodoRepository = mongoTodoRepository;
         this.todoKafkaProducer = todoKafkaProducer;
-    }
-
-    //GET 요청시 데이터 목록 반환
-    @GetMapping
-    public List<MongoTodo> getTodos() {
-        return mongoTodoRepository.findAll();
     }
 
     // POST 요청시 Body로 전달된 json 데이터를 DB에 저장하고 그 객체 반환
