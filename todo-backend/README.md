@@ -48,6 +48,19 @@ cd todo-backend
 
 ### 4. 빌드하기 
 
+
+gradle 설치 (필요한 경우)
+```
+sudo apt update
+sudo apt install gradle -y
+chmod +x ./gradlew
+```
+
+java(jdk21) 설치 (필요한 경우)
+```
+sudo apt install openjdk-17-jdk -y
+```
+
 * Linux/macOS
 ```
 ./gradlew clean build
