@@ -10,3 +10,6 @@ Thumbs.db
 .idea/
 *.iml
 .vscode/
+
+# env var
+.env
