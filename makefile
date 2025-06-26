@@ -9,7 +9,7 @@ stop:
 	docker compose stop
 	docker ps -a
 
-clean:
+down:
 	docker compose down -v 
-	docker ps
+	docker ps -a
 	docker volume ls

@@ -1,20 +1,16 @@
-spring.application.name=todo-backend
+spring.application.name=todo-backend-write
+server.port=8082
 
 # MariaDB
 spring.datasource.url=jdbc:mariadb://mariadb:3306/todo_maria
-spring.datasource.username=YOUR_USER_NAME
-spring.datasource.password=YOUR_PASSWORD
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}
 spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
 
 # MariaDB
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MariaDBDialect
-
-# MongoDB
-spring.data.mongodb.uri=mongodb://mongodb:27017/todo_mongo
-logging.level.org.springframework.data.mongodb.core.MongoTemplate=DEBUG
-
 
 # Kafka
 spring.kafka.bootstrap-servers=kafka:9092

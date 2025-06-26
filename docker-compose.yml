@@ -59,6 +59,12 @@ services:
     build:
       context: ./todo-frontend
       dockerfile: Dockerfile
+      args:
+        REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
+        REACT_APP_API_BASE_URL_READ: ${REACT_APP_API_BASE_URL_READ}
+        REACT_APP_API_BASE_URL_WRITE: ${REACT_APP_API_BASE_URL_WRITE}
+
+
     container_name: frontend
     ports:
       - "3000:80"  # 외부:내부
@@ -88,6 +94,7 @@ services:
       context: ./todo-backend-write
       dockerfile: Dockerfile
     container_name: backend-write
+    restart: on-failure
     ports:
       - "8082:8082"
     depends_on:
