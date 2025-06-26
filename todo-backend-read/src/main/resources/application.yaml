@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: todo-backend-read
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/todo_mongo
+  kafka:
+    bootstrap-servers: kafka:9092
+    template:
+      default-topic: todo-events
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    consumer:
+      group-id: todo-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring:
+          deserializer:
+            value:
+              delegate:
+                class: org.springframework.kafka.support.serializer.JsonDeserializer
+          json:
+            value:
+              default:
+                type: com.leeejjju.todo.todobackend.dto.TodoEvent
+            trusted:
+              packages: "*"
+
+server:
+  port: 8081
+
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+

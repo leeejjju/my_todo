@@ -28,27 +28,13 @@
 mv .env.example .env
 ```
 
-<br>
-
-### 2. properties 설정
-
-백엔드의 `application.properties.example` 파일의 이름을 `application.properties`로 변경해주세요.
-
-
-```
- mv todo-backend-read/src/main/resources/application.properties.example todo-backend-read/src/main/resources/application.properties
- ```
- ```
-  mv todo-backend-write/src/main/resources/application.properties.example todo-backend-write/src/main/resources/application.properties
-  ```
-
 
 <br>
 
-### 3. make
+### 2. make
 
 
-혹시 make가 없다면...
+*혹시 make가 없다면...*
 ```
 sudo apt install make -y
 ```
@@ -75,6 +61,7 @@ make down
 
 <p align="center">
 <img src="todo-frontend/public/images/general.PNG" width="80" height="80"/>
+끝.
 </p>
 <br><br>
 

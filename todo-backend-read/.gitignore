@@ -24,7 +24,7 @@ target/
 # Ignore config files (e.g. DB credentials)
 src/main/resources/*.properties
 src/main/resources/*.yml
-src/main/resources/*.yaml
+# src/main/resources/*.yaml
 
 # Ignore MongoDB / MariaDB dumps if any
 dump/
