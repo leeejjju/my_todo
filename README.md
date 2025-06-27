@@ -56,6 +56,16 @@ make
 make down
 ```
 
+<br>
+
+### 3. 사용하기 
+
+<br>
+
+`localhost:3000` 으로 접속하시면 됩니둥 
+
+<br>
+
 ---
 <br><br>
 
